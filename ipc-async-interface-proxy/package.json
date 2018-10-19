@@ -1,0 +1,66 @@
+{
+  "name": "y",
+  "version": "0.1.0",
+  "author": {},
+  "main": "./dist/main/main.js",
+  "dependencies": {
+    "log4js": "^3.0.2",
+    "fs-extra": "^7.0.0"
+  },
+  "scripts": {
+    "build": "npm run build:main && npm run build:renderer",
+    "build:main": "tsc",
+    "build:renderer": "webpack --config webpack.config.renderer.js",
+    "start": "electron . --enable-logging",
+    "compile:electron": "electron-rebuild -v 3.0.0-beta.7 --arch=ia32",
+    "package:dir": "npm run build && electron-builder --dir"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^5.0.4",
+    "cross-env": "^5.2.0",
+    "devtron": "^1.4.0",
+    "electron": "3.0.0-beta.7",
+    "electron-builder": "^20.28.2",
+    "electron-rebuild": "^1.8.1",
+    "node-gyp": "^3.7.0",
+    "tslint": "^5.10.0",
+    "typescript": "^3.0.3",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "awesome-typescript-loader": "^5.2.0"
+  },
+  "build": {
+    "productName": "y",
+    "compression": "maximum",
+    "directories": {
+      "buildResources": "./assets",
+      "output": "./release"
+    },
+    "win": {
+      "icon": "app.ico"
+    },
+    "electronDist": "./node_modules/electron/dist",
+    "npmRebuild": false,
+    "asar": true,
+    "extraResources": [
+      "assets"
+    ],
+    "files": [
+      {
+        "from": "dist",
+        "to": "dist",
+        "filter": [
+          "**/*",
+          "!**/*.map"
+        ]
+      },
+      {
+        "from": ".",
+        "to": ".",
+        "filter": [
+          "package.json"
+        ]
+      }
+    ]
+  }
+}
