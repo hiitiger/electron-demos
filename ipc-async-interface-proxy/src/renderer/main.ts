@@ -14,7 +14,7 @@ const { y } = window as any;
 
 const echoService = createService<IEchoService>("EchoService");
 const echo = () => {
-  echoService.echo("command").then((res) => {
+  echoService.echoMul("!23", 3).then((res) => {
     console.log(res);
     const div = document.getElementById("res") as HTMLDivElement;
     div.innerText = res;

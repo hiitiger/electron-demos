@@ -1,27 +1,21 @@
 import { ipcRenderer } from "electron";
 
-type AnyFunction = (...args: any[]) => any;
-// Extracts the type if wrapped by a Promise
+type AnyFunction<U extends any[], V> = (...args: U) => V;
+
 type Unpacked<T> = T extends Promise<infer U> ? U : T;
 
-type PromisifiedFunction<T extends AnyFunction> = T extends () => infer U
-  ? () => Promise<Unpacked<U>>
-  : T extends (a1: infer A1) => infer U
-    ? (a1: A1) => Promise<Unpacked<U>>
-    : T extends (a1: infer A1, a2: infer A2) => infer U
-      ? (a1: A1, a2: A2) => Promise<Unpacked<U>>
-      : T extends (a1: infer A1, a2: infer A2, a3: infer A3) => infer U
-        ? (a1: A1, a2: A2, a3: A3) => Promise<Unpacked<U>>
-        : T extends (...args: any[]) => infer U
-          ? (...args: any[]) => Promise<Unpacked<U>>
-          : T;
+type PromisifiedFunction<T> = T extends AnyFunction<infer U, infer V>
+  ? (...args: U) => Promise<Unpacked<V>>
+  : never;
 
 type Promisified<T> = {
-  [K in keyof T]: T[K] extends AnyFunction ? PromisifiedFunction<T[K]> : never
+  [K in keyof T]: T[K] extends AnyFunction<infer U, infer V>
+    ? PromisifiedFunction<T[K]>
+    : never
 };
 
 interface IFunctionCollection {
-  [k: number]: AnyFunction;
+  [k: number]: AnyFunction<any[], any>;
 }
 
 let promiseCounter = 0;

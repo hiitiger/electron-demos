@@ -10,4 +10,9 @@ export class EchoService implements IEchoService {
       resolve(`echo2: ${content}`);
     });
   }
+
+  public echoMul(a: string, n: number) {
+    return `echo: ${a.repeat(n)}`;
+  }
+
 }
