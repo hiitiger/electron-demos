@@ -19,7 +19,7 @@
     "@types/fs-extra": "^5.0.4",
     "cross-env": "^5.2.0",
     "devtron": "^1.4.0",
-    "electron": "3.0.0-beta.7",
+    "electron": "18.3.7",
     "electron-builder": "^20.28.2",
     "electron-rebuild": "^1.8.1",
     "node-gyp": "^3.7.0",
